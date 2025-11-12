@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/rounded_card_bg"
+    android:layout_marginVertical="6dp">
+
+    <TextView
+        android:id="@+id/product_name"
+        android:text="Product Name"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_height="100px"
+        android:layout_width="500px"/>
+
+    <TextView
+        android:id="@+id/product_department"
+        android:text="Department: Electronics"
+        android:layout_height="100px"
+        android:layout_width="500px"/>
+
+    <TextView
+        android:id="@+id/product_stock"
+        android:text="Stock: 120"
+        android:layout_height="100px"
+        android:layout_width="300px"/>
+
+    <TextView
+        android:id="@+id/product_price"
+        android:text="Price: $59.99"
+        android:textColor="#1B5E20"
+        android:textStyle="bold"
+        android:layout_height="100px"
+        android:layout_width="300px"/>
+
+</LinearLayout>
