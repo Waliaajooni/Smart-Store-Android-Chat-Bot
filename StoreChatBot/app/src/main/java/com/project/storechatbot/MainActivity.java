@@ -124,9 +124,11 @@ public class MainActivity extends AppCompatActivity {
             Long saleId = obj.has("saleId") ? obj.get("saleId").getAsLong() : 0;
             String saleDate = obj.has("saleDate") ? obj.get("saleDate").getAsString() : "";
             Double totalAmount = obj.has("totalAmount") ? obj.get("totalAmount").getAsDouble() : 0.0;
+            JsonObject customerJson = obj.has("customer") ? obj.get("customer").getAsJsonObject() : null;
+            String customerName = customerJson.has("customerName") ? customerJson.get("customerName").getAsString() : "";
 
             SaleCardView card = new SaleCardView(this);
-            card.setData(saleId, saleDate, totalAmount);
+            card.setData(saleId, saleDate, totalAmount, customerName);
             chatContainer.addView(card);
         }
     }
@@ -143,4 +145,5 @@ public class MainActivity extends AppCompatActivity {
             chatContainer.addView(card);
         }
     }
+
 }
