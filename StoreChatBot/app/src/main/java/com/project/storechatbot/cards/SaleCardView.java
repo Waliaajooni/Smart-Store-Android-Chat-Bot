@@ -7,7 +7,7 @@ import androidx.cardview.widget.CardView;
 
 import com.project.storechatbot.R;
 public class SaleCardView extends CardView {
-    private TextView tvSaleId, tvSaleDate, tvTotalAmount, tvCustomerName;
+    private TextView tvSaleId, tvSaleDate, tvTotalAmount, tvCustomerId;
 
     public SaleCardView(Context context) {
         super(context);
@@ -16,13 +16,13 @@ public class SaleCardView extends CardView {
         tvSaleId = findViewById(R.id.sale_id);
         tvSaleDate = findViewById(R.id.sale_date);
         tvTotalAmount = findViewById(R.id.sale_total);
-        tvCustomerName = findViewById(R.id.sale_customer);
+        tvCustomerId = findViewById(R.id.sale_customer_id);
     }
 
-    public void setData(long saleId, String saleDate, double totalAmount, String customerName) {
+    public void setData(long saleId, String saleDate, double totalAmount, Long customerId) {
         tvSaleId.setText("Sale ID: " + saleId);
         tvSaleDate.setText("Date: " + saleDate);
         tvTotalAmount.setText("₹ " + totalAmount);
-        tvCustomerName.setText("Customer : " + customerName);
+        tvCustomerId.setText("Customer ID : " + customerId);
     }
 }

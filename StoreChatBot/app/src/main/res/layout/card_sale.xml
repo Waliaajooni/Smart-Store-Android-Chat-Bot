@@ -29,8 +29,8 @@
         android:layout_width="400dp"/>
 
     <TextView
-        android:id="@+id/sale_customer"
-        android:text="Customer: John Doe"
+        android:id="@+id/sale_customer_id"
+        android:text="Customer ID: 1"
         android:layout_height="30dp"
         android:layout_width="400dp"/>
 

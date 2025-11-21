@@ -125,10 +125,10 @@ public class MainActivity extends AppCompatActivity {
             String saleDate = obj.has("saleDate") ? obj.get("saleDate").getAsString() : "";
             Double totalAmount = obj.has("totalAmount") ? obj.get("totalAmount").getAsDouble() : 0.0;
             JsonObject customerJson = obj.has("customer") ? obj.get("customer").getAsJsonObject() : null;
-            String customerName = customerJson.has("customerName") ? customerJson.get("customerName").getAsString() : "";
+            Long customerId = customerJson.has("customerId") ? customerJson.get("customerId").getAsLong() : 0;
 
             SaleCardView card = new SaleCardView(this);
-            card.setData(saleId, saleDate, totalAmount, customerName);
+            card.setData(saleId, saleDate, totalAmount, customerId);
             chatContainer.addView(card);
         }
     }
