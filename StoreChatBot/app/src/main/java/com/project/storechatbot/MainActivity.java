@@ -23,6 +23,8 @@ import com.project.storechatbot.cards.SaleCardView;
 import com.project.storechatbot.client.RetrofitClient;
 import com.project.storechatbot.service.ChatApiService;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText queryInput;
@@ -139,9 +141,22 @@ public class MainActivity extends AppCompatActivity {
             long customerId = obj.has("customerId") ? obj.get("customerId").getAsLong() : 0;
             String name = obj.has("customerName") ? obj.get("customerName").getAsString() : "";
             String gender = obj.has("gender") ? obj.get("gender").getAsString() : "";
+            JsonArray salesForCustomer = obj.has("sales") ? obj.get("sales").getAsJsonArray() : null;
+            double totalAmount = 0.0d;
+
+            if (salesForCustomer != null) {
+                for (JsonElement saleElement : salesForCustomer) {
+                    JsonObject saleObj = saleElement.getAsJsonObject();
+
+                    // Extract individual sale fields
+                    long saleId = saleObj.has("saleId") ? saleObj.get("saleId").getAsLong() : 0;
+                    String saleDate = saleObj.has("saleDate") ? saleObj.get("saleDate").getAsString() : "";
+                    totalAmount += saleObj.has("totalAmount") ? saleObj.get("totalAmount").getAsDouble() : 0.0d;
+                }
+            }
 
             CustomerCardView card = new CustomerCardView(this);
-            card.setData(customerId, name, gender);
+            card.setData(customerId, name, gender, totalAmount);
             chatContainer.addView(card);
         }
     }
