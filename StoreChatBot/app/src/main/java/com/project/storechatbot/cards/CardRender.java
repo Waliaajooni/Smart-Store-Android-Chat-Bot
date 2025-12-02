@@ -10,12 +10,17 @@ import com.project.storechatbot.R;
 
 public class CardRender extends CardView {
 
-    private TextView propertyName, propertyValue;
+    private TextView tvPropertyName, tvPropertyValue;
 
     public CardRender(@NonNull Context context) {
         super(context);
         inflate(context, R.layout.activity_card, this);
+        tvPropertyName = findViewById(R.id.property_name);
+        tvPropertyValue = findViewById(R.id.property_value);
     }
 
-
+    public void setData(String propertyName, String propertyValue) {
+        tvPropertyName.setText(propertyName);
+        tvPropertyValue.setText(propertyValue);
+    }
 }

@@ -17,13 +17,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import com.project.storechatbot.cards.CardRender;
 import com.project.storechatbot.cards.CustomerCardView;
+import com.project.storechatbot.cards.DynamicCardView;
 import com.project.storechatbot.cards.ProductCardView;
 import com.project.storechatbot.cards.SaleCardView;
 import com.project.storechatbot.client.RetrofitClient;
 import com.project.storechatbot.service.ChatApiService;
 
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             String query = queryInput.getText().toString().trim();
             if (!query.isEmpty()) {
                 chatContainer.removeAllViews();
-                callChatApi(query);
+                callChatApi1(query);
                 queryInput.setText("");
             }
         });
@@ -79,6 +82,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void callChatApi1(String query) {
+        apiService.getQueryResponse1(query).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    JsonObject result = response.body();
+                    parseDynamicResponse1(result);
+                } else {
+                    Toast.makeText(MainActivity.this, "No data found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void parseDynamicResponse(JsonObject response) {
         for (String key : response.keySet()) {
             JsonArray dataArray = response.getAsJsonArray(key);
@@ -98,6 +120,42 @@ public class MainActivity extends AppCompatActivity {
         }
 
         scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+    }
+
+    private void parseDynamicResponse1(JsonObject response) {
+        for (String key : response.keySet()) {
+            JsonArray arr = response.getAsJsonArray(key);
+            renderDynamic(arr);
+        }
+    }
+
+    private void renderDynamic(JsonArray items) {
+        for (JsonElement element : items) {
+
+            JsonObject obj = element.getAsJsonObject();
+
+            renderDynamicCard(obj);
+
+            // Add spacing after each record
+            View space = new View(this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 20
+            );
+            space.setLayoutParams(params);
+            chatContainer.addView(space);
+        }
+    }
+
+    private void renderDynamicCard(JsonObject obj) {
+
+        DynamicCardView card = new DynamicCardView(this);
+
+        for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
+            card.addProperty(entry.getKey(), entry.getValue().getAsString());
+        }
+
+        chatContainer.addView(card);
+
     }
 
     private void renderTextMessage(String message) {
@@ -148,9 +206,8 @@ public class MainActivity extends AppCompatActivity {
                 for (JsonElement saleElement : salesForCustomer) {
                     JsonObject saleObj = saleElement.getAsJsonObject();
 
-                    // Extract individual sale fields
-                    long saleId = saleObj.has("saleId") ? saleObj.get("saleId").getAsLong() : 0;
-                    String saleDate = saleObj.has("saleDate") ? saleObj.get("saleDate").getAsString() : "";
+//                    long saleId = saleObj.has("saleId") ? saleObj.get("saleId").getAsLong() : 0;
+//                    String saleDate = saleObj.has("saleDate") ? saleObj.get("saleDate").getAsString() : "";
                     totalAmount += saleObj.has("totalAmount") ? saleObj.get("totalAmount").getAsDouble() : 0.0d;
                 }
             }

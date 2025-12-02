@@ -8,4 +8,8 @@ import retrofit2.http.Query;
 public interface ChatApiService {
     @GET("api/v1/chat")
     Call<JsonObject> getQueryResponse(@Query("query") String query);
+
+
+    @GET("api/v1/chat1")
+    Call<JsonObject> getQueryResponse1(@Query("query") String query);
 }
